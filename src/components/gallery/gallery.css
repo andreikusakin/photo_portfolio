@@ -1,0 +1,20 @@
+.gallery {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 90vw;
+    flex-wrap: wrap;
+    margin-top: 4.5rem;
+    z-index: 0;
+    
+  }
+  
+  
+  .gallery img {
+    
+    max-height: 95vh;
+    max-width: 95vw;
+    min-width: 300px;
+    object-fit: contain;
+  }
