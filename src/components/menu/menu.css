@@ -1,0 +1,112 @@
+.nav-container {
+  top: 0;
+  left: 0;
+  display: block;
+  /* position: fixed; */
+  z-index: 10;
+  text-transform: uppercase;
+
+  margin-left: 2rem;
+  letter-spacing: 0.2rem;
+  width: 20rem;
+  height: 100%;
+}
+
+.menu-container {
+  position: fixed;
+}
+
+.menu {
+  display: none;
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+  font-size: 0.75rem;
+  line-height: 1.5rem;
+}
+
+.menu ul {
+  color: gray;
+}
+
+.mobile-menu {
+  top: 0;
+  right: 0;
+  display: flex;
+  position: fixed;
+  justify-content: end;
+  align-items: center;
+
+  height: 100%;
+
+  overflow: hidden;
+  background-color: white;
+  text-align: right;
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+  font-size: 2rem;
+  line-height: 3rem;
+  z-index: 20;
+}
+
+.mobile-menu ul {
+  margin-right: 2rem;
+}
+
+.mobile-menu-bg {
+  display: block;
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.3);
+  z-index: 19;
+}
+
+.header {
+  font-family: "Roboto Condensed", sans-serif;
+  line-height: 0.5rem;
+  margin-bottom: 2.5rem;
+  margin-top: 2rem;
+  mix-blend-mode: exclusion;
+}
+
+a:link,
+a:visited {
+  text-decoration: none;
+  color: inherit;
+}
+
+.menu-btn {
+  display: block;
+  all: unset;
+  position: fixed;
+  top: 0;
+  right: 0;
+  font-size: large;
+  
+  margin-top: 1.7rem;
+  margin-right: 3vw;
+  z-index: 30;
+}
+
+@media (min-width: 1000px) {
+  .menu {
+    display: block;
+  }
+
+  .menu-btn {
+    display: none;
+  }
+}
+
+@media (max-width: 1000px) {
+  .nav-container {
+    position: fixed;
+    height: fit-content;
+    margin-left: 0;
+  }
+  .header {
+    margin-left: 4vw;
+  }
+}

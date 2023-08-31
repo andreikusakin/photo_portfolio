@@ -1,40 +1,32 @@
 import logo from "./logo.svg";
 import "./App.css";
-import { images } from "./images";
-import Menu from "./components/menu/Menu";
 
+import Menu from "./components/menu/Menu";
+import { Link, Outlet } from "react-router-dom";
+import { useState } from "react";
+
+const backgroundImages = [{
+  url: "https://i.imgur.com/k0Yi5na.jpg",
+  alt: "background image"
+}]
 
 
 function App() {
 
-  function getRandomWidth() {
-    return 15 + Math.random() * 40 + "vw";
-  }
+ 
+//TODO FULLSCREEN BACKGROUND RANDOM IMAGE
 
-  function getRandomPadding() {
-    return 5 + Math.random() * 5 + "%";
-  }
+
+
 
 
   
 
   return (
     <div className="App">
+      {/* <div className="background-fullscreen">{backgroundImages.map((i) => (<img src={i.url} alt={i.alt}/>))}</div> */}
       <Menu />
-      
-      <div className="gallery-row">{images.map((image) => (<img key={image.id}
-            src={image.url}
-            alt={image.title}
-            style={{
-              maxWidth: "95vw",
-              width: getRandomWidth(),
-              
-              paddingTop: getRandomPadding(),
-              paddingBottom: getRandomPadding(),
-              paddingLeft: getRandomPadding(),
-              paddingRight: getRandomPadding()
-            }}
-            />))}</div>
+      <Outlet />
     </div>
   );
 }

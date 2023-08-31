@@ -1,13 +1,60 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import App from "./App";
+import ErrorPage from "./components/errorPage/ErrorPage";
+import Wedding from "./components/wedding/Wedding";
+import reportWebVitals from "./reportWebVitals";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import Travel from "./components/travel/Travel";
+import Gallery from "./components/gallery/Gallery";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <App />,
+    errorElement: <ErrorPage />,
+    children: [
+      {
+        path: "/wedding",
+        element: <Wedding />,
+        children: [
+          {
+            path: ":id",
+            element: <Gallery />,
+          },
+        ],
+      },
+      {
+        path: "/portrait",
+        element: <Wedding />,
+      },
+      {
+        path: "/travel",
+        element: <Travel />,
+        children: [
+          {
+            path: ":id",
+            element: <Gallery />,
+          },
+        ],
+      },
+      {
+        path: "/about",
+        element: <Wedding />,
+      },
+      {
+        path: "/contact",
+        element: <Wedding />,
+      },
+    ],
+  },
+]);
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <App />
+    <RouterProvider router={router} />
   </React.StrictMode>
 );
 
