@@ -7,55 +7,42 @@ import {
 import { fromCognitoIdentityPool } from "@aws-sdk/credential-providers";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 
+const client = new S3Client({
+  region: "us-east-1",
+  credentials: fromCognitoIdentityPool({
+    clientConfig: { region: "us-east-1" },
+    identityPoolId: "us-east-1:9987b9a8-e4d3-45af-90be-498389b7fa53",
+  }),
+});
 
-export function useFetchPhotos(galleryName) {
-    const [objects, setObjects] = useState([]);
-    const [preSignedUrls, setPreSignedUrls] = useState([]);
-  
-    useEffect(() => {
-      const client = new S3Client({
-        region: "us-east-1",
-        credentials: fromCognitoIdentityPool({
-          clientConfig: { region: "us-east-1" },
-          identityPoolId: "us-east-1:9987b9a8-e4d3-45af-90be-498389b7fa53",
-        }),
-      });
-      const command = new ListObjectsV2Command({
-        Bucket: "react-photo-portfolio-bucket",
-        Prefix: galleryName + "/photo",
-      });
-      client.send(command).then(({ Contents }) => setObjects(Contents || []));
-      
-    }, []);
-  
-    // console.log(objects)
-  
-    useEffect(() => {
-      if (objects.length > 0) {
-        
-        const generatePreSignedUrls = async () => {
-          const client = new S3Client({
-            region: "us-east-1",
-            credentials: fromCognitoIdentityPool({
-              clientConfig: { region: "us-east-1" },
-              identityPoolId: "us-east-1:9987b9a8-e4d3-45af-90be-498389b7fa53",
-            }),
-          });
-  
-          const urls = await Promise.all(
-            objects.map(async (o) => {
-              return await getSignedUrl(client, new GetObjectCommand({ Bucket: "react-photo-portfolio-bucket", Key: `${o.Key}` }), { expiresIn: 3600 });
-            })
-          );
-  
-          setPreSignedUrls(urls);
-        };
-  
-        generatePreSignedUrls();
-      }
-    }, [objects]);
+export async function fetchPhotos(galleryName) {
+  const command = new ListObjectsV2Command({
+    Bucket: "react-photo-portfolio-bucket",
+    Prefix: galleryName + "/photo",
+  });
 
-    // console.log(preSignedUrls)
+  const { Contents: objects } = await client.send(command);
 
-    return preSignedUrls;
+  if (objects.length > 0) {
+    return generatePreSignedUrls(objects).then((urls) => urls);
+  }
+
+  return [];
 }
+
+const generatePreSignedUrls = async (objects) => {
+  const urls = await Promise.all(
+    objects.map(async (o) => {
+      return await getSignedUrl(
+        client,
+        new GetObjectCommand({
+          Bucket: "react-photo-portfolio-bucket",
+          Key: `${o.Key}`,
+        }),
+        { expiresIn: 3600 }
+      );
+    })
+  );
+
+  return urls;
+};
