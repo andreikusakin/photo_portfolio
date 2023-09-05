@@ -1,31 +1,40 @@
-import logo from "./logo.svg";
 import "./App.css";
-
 import Menu from "./components/menu/Menu";
-import { Link, Outlet } from "react-router-dom";
-import { useState } from "react";
+import { Outlet } from "react-router-dom";
 
-const backgroundImages = [{
-  url: "https://i.imgur.com/k0Yi5na.jpg",
-  alt: "background image"
-}]
-
+const backgroundImages = [
+  {
+    url: "/images/bg1.jpg",
+  },
+  {
+    url: "/images/bg2.jpg",
+  },
+  {
+    url: "/images/bg3.jpg",
+  },
+  {
+    url: "/images/bg4.jpg",
+  },
+  {
+    url: "/images/bg5.jpg",
+  },
+  {
+    url: "/images/bg6.jpg",
+  },
+  {
+    url: "/images/bg7.jpg",
+  },
+];
 
 function App() {
-
- 
-//TODO FULLSCREEN BACKGROUND RANDOM IMAGE
-
-
-
-
-
-  
-
   return (
     <div className="App">
-      {/* <div className="background-fullscreen">{backgroundImages.map((i) => (<img src={i.url} alt={i.alt}/>))}</div> */}
       <Menu />
+      <div className="hero-background"
+      style={{
+        backgroundImage: `url(${backgroundImages[Math.floor(Math.random() * backgroundImages.length)].url})`,
+      }}
+      ></div>
       <Outlet />
     </div>
   );
