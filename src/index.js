@@ -8,6 +8,9 @@ import reportWebVitals from "./reportWebVitals";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Travel from "./components/travel/Travel";
 import Gallery from "./components/gallery/Gallery";
+import Portrait from "./components/portrait/Portrait";
+import About from "./components/about/About";
+import Contact from "./components/contact/Contact";
 
 const router = createBrowserRouter([
   {
@@ -22,12 +25,20 @@ const router = createBrowserRouter([
           {
             path: ":id",
             element: <Gallery />,
+            
           },
         ],
       },
       {
         path: "/portrait",
-        element: <Wedding />,
+        element: <Portrait />,
+        children: [
+          {
+            path: ":id",
+            element: <Gallery />,
+            
+          },
+        ],
       },
       {
         path: "/travel",
@@ -41,11 +52,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/about",
-        element: <Wedding />,
+        element: <About />,
       },
       {
         path: "/contact",
-        element: <Wedding />,
+        element: <Contact />,
       },
     ],
   },
@@ -58,7 +69,3 @@ root.render(
   </React.StrictMode>
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();

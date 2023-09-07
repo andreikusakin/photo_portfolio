@@ -1,0 +1,40 @@
+.contact-page {
+   right: 0;
+   
+    position: absolute;
+    height: 100vh;
+    
+    
+   text-align: end;
+    text-transform: uppercase;
+}
+
+.contact-container {
+    display: flex;
+    justify-content: center;
+    align-items: end;
+    flex-direction: column;
+    /* width: 80%; */
+    width: fit-content;
+    width: 800px;
+    height: 100%;
+    background-color: #fff;
+   
+}
+
+.contact-content {
+    margin-right: 1vw;
+}
+
+.contact-content h3 {
+    font-family: 'Roboto Condensed', sans-serif;
+    font-size: 2rem;
+    margin: 2rem;
+}
+
+.contact-content ul {
+    margin: 2rem;
+    font-size: 1.5rem;
+    line-height: 3rem;
+    color: rgb(127, 127, 127);
+}

@@ -26,13 +26,15 @@ const backgroundImages = [
   },
 ];
 
+const randomIndex = Math.floor(Math.random() * backgroundImages.length);
+
 function App() {
   return (
     <div className="App">
       <Menu />
       <div className="hero-background"
       style={{
-        backgroundImage: `url(${backgroundImages[Math.floor(Math.random() * backgroundImages.length)].url})`,
+        backgroundImage: `url(${backgroundImages[randomIndex].url})`,
       }}
       ></div>
       <Outlet />

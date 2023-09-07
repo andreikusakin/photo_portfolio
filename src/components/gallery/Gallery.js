@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./gallery.css";
 import { motion } from "framer-motion";
-import { useFetchPhotos } from "../../fetchPhotos";
-import { useLocation } from 'react-router-dom';
+import { fetchPhotos } from "../../fetchPhotos";
+import { useLocation, useParams } from "react-router-dom";
+import Loader from "../loader/Loader";
 
 const containerAnimation = {
   hidden: { opacity: 0 },
@@ -15,37 +16,37 @@ const containerAnimation = {
   },
 };
 
-
 const imageAnimation = {
   offscreen: {
     opacity: 0,
-    y: 100
+    y: 100,
   },
   onscreen: {
     opacity: 1,
     y: 0,
-    
+
     transition: {
-      duration: 0.8
-    }
-  }
-}
-
-
+      duration: 0.8,
+    },
+  },
+};
 
 export default function Gallery() {
-
   let location = useLocation();
-  // console.log(location.pathname.substring(1))
+  const [imageArray, setImageArray] = useState([]);
 
-const imageArray = useFetchPhotos(location.pathname.substring(1));
+  let { id } = useParams();
 
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await fetchPhotos(location.pathname.substring(1));
+      setImageArray(data);
+    };
 
-// console.log(imageArray)
+    fetchData().catch(console.error);
+  }, [id]);
 
   const ref = useRef(null);
-
-
 
   function getRandomWidth() {
     return 20 + Math.random() * 40 + "vw";
@@ -77,37 +78,41 @@ const imageArray = useFetchPhotos(location.pathname.substring(1));
     setShowModal(!showModal);
   }
 
-  return (
-    <motion.div
-      className="gallery"
-      // variants={containerAnimation}
-      // initial="hidden"
-      // animate="visible"
-      
-    >
-      {imageArray.map((image, index) => (
+  const [shouldRenderLoader, setShouldRenderLoader] = useState(true);
 
-        
-        <motion.img
-          key={index}
-          src={image}
-          alt="photo"
-          onClick={() => ModalWindow(image)}
-          style={{
-            maxWidth: "95vw",
-            ...imageStyles[index],
-          }}
-          variants={imageAnimation}
-          initial="offscreen"
-      whileInView="onscreen"
-      viewport={{ once: true }}
-        />
-      ))}
-      {showModal ? (
-        <div className="modal-window" onClick={() => setShowModal(false)}>
-          <img src={currentImage} alt="Modal Image" />
-        </div>
-      ) : null}
-    </motion.div>
+  useEffect(() => {
+    setShouldRenderLoader(false);
+    setTimeout(() => {
+      setShouldRenderLoader(true);
+    }, 0);
+  }, [id]);
+
+  return (
+    <>
+      {shouldRenderLoader && <Loader />}
+      <motion.div className="gallery">
+        {imageArray.map((image, index) => (
+          <motion.img
+            key={index}
+            src={image}
+            alt="photo"
+            onClick={() => ModalWindow(image)}
+            style={{
+              maxWidth: "95vw",
+              ...imageStyles[index],
+            }}
+            variants={imageAnimation}
+            initial="offscreen"
+            whileInView="onscreen"
+            viewport={{ once: true }}
+          />
+        ))}
+        {showModal ? (
+          <div className="modal-window" onClick={() => setShowModal(false)}>
+            <img src={currentImage} alt="Modal Image" />
+          </div>
+        ) : null}
+      </motion.div>
+    </>
   );
 }

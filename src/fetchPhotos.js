@@ -15,21 +15,6 @@ const client = new S3Client({
   }),
 });
 
-export async function fetchPhotos(galleryName) {
-  const command = new ListObjectsV2Command({
-    Bucket: "react-photo-portfolio-bucket",
-    Prefix: galleryName + "/photo",
-  });
-
-  const { Contents: objects } = await client.send(command);
-
-  if (objects.length > 0) {
-    return generatePreSignedUrls(objects).then((urls) => urls);
-  }
-
-  return [];
-}
-
 const generatePreSignedUrls = async (objects) => {
   const urls = await Promise.all(
     objects.map(async (o) => {
@@ -46,3 +31,20 @@ const generatePreSignedUrls = async (objects) => {
 
   return urls;
 };
+
+
+export async function fetchPhotos(galleryName) {
+  const command = new ListObjectsV2Command({
+    Bucket: "react-photo-portfolio-bucket",
+    Prefix: galleryName + "/photo",
+  });
+
+  const { Contents: objects } = await client.send(command);
+
+  if (objects.length > 0) {
+    return generatePreSignedUrls(objects).then((urls) => urls);
+  }
+
+  return [];
+}
+

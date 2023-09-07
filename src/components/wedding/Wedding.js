@@ -1,48 +1,34 @@
-import React, { useState } from "react";
-import Gallery from "../gallery/Gallery";
-import { images } from "../../images";
-import { Link, Outlet } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import "./wedding.css";
 import Section from "../section/Section";
+import Loader from "../loader/Loader";
 
 const weddingList = [
   {
     name: "Jessica & George",
     pathName: "Jessica-George",
-    gallery: images,
-    coverImg: "https://i.imgur.com/AnIudvv.jpg",
+    coverImg: "/images/jessicageorge.jpg",
   },
   {
-    name: "Valerie & Tom",
-    gallery: images,
-    coverImg: "https://i.imgur.com/PJBaDHK.jpg",
+    name: "Veronica & Joseph",
+    pathName: "Veronica-Joseph",
+
+    coverImg: "/images/veronicajoseph.jpg",
   },
   {
-    name: "Jessica & George",
-    gallery: images,
-    coverImg: "https://i.imgur.com/AnIudvv.jpg",
-  },
-  {
-    name: "Valerie & Tom",
-    gallery: images,
-    coverImg: "https://i.imgur.com/PJBaDHK.jpg",
+    name: "Orbrey & Brett",
+    pathName: "Orbrey-Brett",
+    coverImg: "/images/orbreybrett.jpg",
   },
 ];
 
-
-
 export default function Wedding() {
-  // const [imageArray, setImageArray] = useState([]);
-
   return (
-    <div className="wedding-section">
-      {/* <Outlet context={[imageArray, setImageArray]} /> */}
+    <div>
+      <Loader />
+
       <Outlet />
-      <Section
-        list={weddingList}
-        // onClickFunction={(gallery) => setImageArray(gallery)}
-      />
-      
+      <Section list={weddingList} />
     </div>
   );
 }

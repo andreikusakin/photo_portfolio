@@ -9,17 +9,6 @@ const portraitList = [
       pathName: "Jessica-George",
       coverImg: "/images/jessicageorge.jpg",
     },
-    {
-      name: "Veronica & Joseph",
-      pathName: "Veronica-Joseph",
-  
-      coverImg: "/images/veronicajoseph.jpg",
-    },
-    {
-      name: "Orbrey & Brett",
-      pathName: "Orbrey-Brett",
-      coverImg: "/images/orbreybrett.jpg",
-    },
   ];
 
 export default function Portrait() {

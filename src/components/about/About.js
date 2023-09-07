@@ -13,9 +13,9 @@ export default function About() {
       ></motion.div>
       <motion.div className="about-section">
         <motion.div
-         initial={{ x: "100vw", opacity: 0 }}
+         initial={{ x: 200, opacity: 0 }}
          animate={{ x: 0, opacity: 1 }}
-         transition={{ duration: 2 }}
+         transition={{ duration: 1, delay: 1 }}
 
         
         className="about-text">
@@ -33,8 +33,8 @@ export default function About() {
         </motion.div>
 
         <motion.div
-          initial={{ x: "100%" }}
-          animate={{ x: 0 }}
+          initial={{ x: "100%", opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
           transition={{ duration: 1 }}
           className="about-photo"
         ></motion.div>
