@@ -1,20 +1,9 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import "./gallery.css";
 import { motion } from "framer-motion";
 import { fetchPhotos } from "../../fetchPhotos";
 import { useLocation, useParams } from "react-router-dom";
 import Loader from "../loader/Loader";
-
-const containerAnimation = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.3,
-      delayChildren: 0.5,
-    },
-  },
-};
 
 const imageAnimation = {
   offscreen: {
@@ -32,33 +21,24 @@ const imageAnimation = {
 };
 
 export default function Gallery() {
-  let location = useLocation();
+  const location = useLocation();
+  const { id } = useParams();
+  
   const [imageArray, setImageArray] = useState([]);
-
-  let { id } = useParams();
+  const [showModal, setShowModal] = useState(false);
+  const [currentImage, setCurrentImage] = useState("");
+  const [imageStyles, setImageStyles] = useState([]);
+  const [shouldRenderLoader, setShouldRenderLoader] = useState(false);
 
   useEffect(() => {
+    setShouldRenderLoader(true)
     const fetchData = async () => {
       const data = await fetchPhotos(location.pathname.substring(1));
       setImageArray(data);
     };
 
-    fetchData().catch(console.error);
+    fetchData().then(() => setTimeout(() => {setShouldRenderLoader(false)}, 2000));
   }, [id]);
-
-  const ref = useRef(null);
-
-  function getRandomWidth() {
-    return 20 + Math.random() * 40 + "vw";
-  }
-
-  function getRandomMargin() {
-    return 5 + Math.random() * 5 + "%";
-  }
-
-  const [showModal, setShowModal] = useState(false);
-  const [currentImage, setCurrentImage] = useState("");
-  const [imageStyles, setImageStyles] = useState([]);
 
   useEffect(() => {
     if (window.innerWidth > 600) {
@@ -73,19 +53,18 @@ export default function Gallery() {
     }
   }, [imageArray]);
 
-  function ModalWindow(imageUrl) {
+  const openModalWindow = (imageUrl) => {
     setCurrentImage(imageUrl);
     setShowModal(!showModal);
   }
 
-  const [shouldRenderLoader, setShouldRenderLoader] = useState(true);
+  const getRandomWidth = () => {
+    return 20 + Math.random() * 40 + "vw";
+  }
 
-  useEffect(() => {
-    setShouldRenderLoader(false);
-    setTimeout(() => {
-      setShouldRenderLoader(true);
-    }, 0);
-  }, [id]);
+  const getRandomMargin = () => {
+    return 5 + Math.random() * 5 + "%";
+  }
 
   return (
     <>
@@ -96,7 +75,7 @@ export default function Gallery() {
             key={index}
             src={image}
             alt="photo"
-            onClick={() => ModalWindow(image)}
+            onClick={() => openModalWindow(image)}
             style={{
               maxWidth: "95vw",
               ...imageStyles[index],
@@ -107,11 +86,11 @@ export default function Gallery() {
             viewport={{ once: true }}
           />
         ))}
-        {showModal ? (
+        {showModal && (
           <div className="modal-window" onClick={() => setShowModal(false)}>
             <img src={currentImage} alt="Modal Image" />
           </div>
-        ) : null}
+        )}
       </motion.div>
     </>
   );

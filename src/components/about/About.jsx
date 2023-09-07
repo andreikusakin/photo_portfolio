@@ -2,8 +2,7 @@ import React from "react";
 import "./about.css";
 import { motion } from "framer-motion";
 
-export default function About() {
-  return (
+const About = () => (
     <div className="about-page">
       <motion.div
         initial={{ x: "100vw" }}
@@ -41,4 +40,4 @@ export default function About() {
       </motion.div>
     </div>
   );
-}
+ export default About;

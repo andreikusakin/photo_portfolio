@@ -1,10 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import "./index.css";
+ import "./index.css";
 import App from "./App";
 import ErrorPage from "./components/errorPage/ErrorPage";
 import Wedding from "./components/wedding/Wedding";
-import reportWebVitals from "./reportWebVitals";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Travel from "./components/travel/Travel";
 import Gallery from "./components/gallery/Gallery";
