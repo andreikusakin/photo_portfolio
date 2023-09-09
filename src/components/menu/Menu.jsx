@@ -1,95 +1,99 @@
-import React, { useState, useRef } from "react";
-import { Link } from "react-router-dom";
-import "./menu.css";
-import { motion } from "framer-motion";
-import MenuIcon from "@mui/icons-material/Menu";
-import CloseIcon from "@mui/icons-material/Close";
+import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
+import './menu.css'
+import { motion } from 'framer-motion'
+import MenuIcon from '@mui/icons-material/Menu'
+import CloseIcon from '@mui/icons-material/Close'
 
-export default function Menu() {
-  const ref = useRef(null);
+const galleriesMenuItems = [
+  { url: '/wedding', title: 'Wedding' },
+  { url: '/travel', title: 'Travel' }
+]
 
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, left: 0 });
-  };
+const miscMenuItems = [
+  { url: '/about', title: 'About' },
+  { url: '/contact', title: 'Contact' }
+]
 
-  const [menuButton, setMenuButton] = useState(false);
+export default function Menu () {
+  const [menuButton, setMenuButton] = useState(false)
 
-  function menuButtonClicked() {
+  function menuButtonClicked () {
     if (window.innerWidth < 1000) {
-      setMenuButton(!menuButton);
+      setMenuButton(!menuButton)
     }
 
-    scrollToTop();
+    window.scrollTo({ top: 0, left: 0 })
   }
 
   const menuAnimations = {
     initial: { x: 0 },
-    animate: { x: menuButton ? -10 : 10 },
-  };
+    animate: { x: menuButton ? -10 : 10 }
+  }
 
-  function MenuItem({ child }) {
+  function MenuItem ({ url, title }) {
     return (
       <motion.li
-        initial="initial"
-        whileHover="animate"
+        initial='initial'
+        whileHover='animate'
         variants={menuAnimations}
         onClick={menuButtonClicked}
       >
-        {child}
+        <Link to={url}>{title}</Link>
       </motion.li>
-    );
+    )
   }
 
-  function MenuList() {
+  function MenuList () {
     return (
       <ul>
-        <MenuItem child={<Link to="/wedding">Wedding</Link>}></MenuItem>
-        {/* <MenuItem child={<Link to="/portrait">Portrait</Link>}></MenuItem> */}
-        <MenuItem child={<Link to="/travel">Travel</Link>}></MenuItem>
+        {galleriesMenuItems.map(item => (
+          <MenuItem key={item.title} url={item.url} title={item.title} />
+        ))}
         <br></br>
-        <MenuItem child={<Link to="/about">About</Link>}></MenuItem>
-        <MenuItem child={<Link to="/contact">Contact</Link>}></MenuItem>
+        {miscMenuItems.map(item => (
+           <MenuItem key={item.title} url={item.url} title={item.title} />
+        ))}
       </ul>
-    );
+    )
   }
 
   return (
-    <nav className="nav-container">
-      
-        <div className="header">
-        <Link to="/" >
+    <nav className='nav-container'>
+      <div className='header'>
+        <Link to='/'>
           <h3>Andrew Kusakin</h3>
           <h4>Photography</h4>
-        </Link></div>
-        <div className="menu">
-          <MenuList />
-        
+        </Link>
+      </div>
+      <div className='menu'>
+        <MenuList />
       </div>
 
       <motion.div
-        className="mobile-menu"
+        className='mobile-menu'
         initial={{ width: 0, x: 100 }}
-        animate={{ width: menuButton ? "450px" : 0, x: menuButton ? 0 : 100 }}
-        style={{ display: menuButton ? "flex" : "none" }}
+        animate={{ width: menuButton ? '450px' : 0, x: menuButton ? 0 : 100 }}
+        style={{ display: menuButton ? 'flex' : 'none' }}
         transition={{ duration: 1 }}
       >
         <MenuList />
       </motion.div>
       <motion.div
-        className="mobile-menu-bg"
+        className='mobile-menu-bg'
         initial={{ width: 0, x: 100 }}
-        animate={{ width: menuButton ? "100%" : 0, x: menuButton ? 0 : 100 }}
-        style={{ display: menuButton ? "block" : "none" }}
+        animate={{ width: menuButton ? '100%' : 0, x: menuButton ? 0 : 100 }}
+        style={{ display: menuButton ? 'block' : 'none' }}
         transition={{ duration: 1 }}
       ></motion.div>
 
-      <button className="menu-btn" onClick={(e) => setMenuButton(!menuButton)}>
+      <button className='menu-btn' onClick={e => setMenuButton(!menuButton)}>
         {menuButton ? (
-          <CloseIcon fontSize="large" />
+          <CloseIcon fontSize='large' />
         ) : (
-          <MenuIcon fontSize="large" />
+          <MenuIcon fontSize='large' />
         )}
       </button>
     </nav>
-  );
+  )
 }

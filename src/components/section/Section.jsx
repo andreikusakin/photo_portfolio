@@ -21,7 +21,7 @@ export default function Section({ list }) {
         <div className='grid-container'>
 
         {list.map((i) => (
-          <Link to={`${i.pathName}`} onClick={() => window.scrollTo(0, 0)}>
+          <Link key={i.pathName} to={`${i.pathName}`} onClick={() => window.scrollTo(0, 0)}>
             <div className="section-item">
               <img src={i.coverImg} alt={i.name} />
               <p>{i.name}</p>
