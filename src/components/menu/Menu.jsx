@@ -48,11 +48,11 @@ export default function Menu () {
     return (
       <ul>
         {galleriesMenuItems.map(item => (
-          <MenuItem url={item.url} title={item.title} />
+          <MenuItem key={item.title} url={item.url} title={item.title} />
         ))}
         <br></br>
         {miscMenuItems.map(item => (
-           <MenuItem url={item.url} title={item.title} />
+           <MenuItem key={item.title} url={item.url} title={item.title} />
         ))}
       </ul>
     )
