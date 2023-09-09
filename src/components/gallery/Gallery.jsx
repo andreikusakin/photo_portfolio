@@ -38,7 +38,7 @@ export default function Gallery() {
     };
 
     fetchData().then(() => setTimeout(() => {setShouldRenderLoader(false)}, 2000));
-  }, [id]);
+  }, [id, location.pathname]);
 
   useEffect(() => {
     if (window.innerWidth > 600) {
@@ -88,7 +88,7 @@ export default function Gallery() {
         ))}
         {showModal && (
           <div className="modal-window" onClick={() => setShowModal(false)}>
-            <img src={currentImage} alt="Modal Image" />
+            <img src={currentImage} alt="Modal" />
           </div>
         )}
       </motion.div>
